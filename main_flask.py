@@ -1,4 +1,5 @@
-from flask import Flask , render_template,request
+from flask import Flask , render_template, request
+from horoscopeapi import zodiac_sign, get_horoscope
 
 app = Flask("Test")
 
@@ -32,12 +33,26 @@ def hello(vistor):
 def showgeneration():
 	form_data = request.form #Getting hold of a Form object that is sent from a browser.
 	year = form_data["dob"]
+
 	gen = calculate_gen(int(year))
+
 	return render_template("gen.html", generation=gen)
 
+@app.route("/horoscope", methods=["POST"])
+def handle_horoscope():
+	form_data = request.form #Getting hold of a Form object that is sent from a browser.
+	day = form_data["day"]
+	month = form_data["month"]
 
+	#gen = calculate_gen(int(year))
 
+	z_sign	= zodiac_sign(int(month),int(day))
 
+	print "Sign - "+ z_sign
+	data	= get_horoscope(z_sign)
+	print data
+
+	return render_template("horoscope.html", data=data)
 
 
 
