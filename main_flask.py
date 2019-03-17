@@ -55,5 +55,5 @@ def handle_horoscope():
 	return render_template("horoscope.html", data=data)
 
 
-
-app.run()
+if __name__ == "__main__":
+	app.run()
